@@ -791,7 +791,7 @@ function display_key( $k ) {
 				}
 				
 				
-				$log = str_replace(array('httplog', 'app_err', ' ZAMAN ', ' saat ', 'http://', 'array(', '"', "'"), '', $log);
+				$log = str_replace(array('httplog', 'app_log', ' ZAMAN ', ' saat ', 'http://', 'array(', '"', "'"), '', $log);
 				
 				
 				$ccds_arr = array(' IP ', ' TRYC ', ' URL ');// success, default  , ' ZAMAN '
