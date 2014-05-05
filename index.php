@@ -20,6 +20,8 @@ $proje_isim = array(
 	'15' => ' -  15 boş -',
 );
 
+
+
 /***************************************************************************
  *
  *
@@ -153,19 +155,6 @@ Predis\Autoloader::register();
 		
 		
 		
-
-
-
-
-
-
-
-		
-
-
-
-
-
 
 
 
@@ -408,9 +397,7 @@ ul li {margin-bottom:10px; }
  *
  */	 
 
-	display_databases( $redis, 
-					   $db,
-					   $server_alias );
+	display_databases( $redis,  $db, $server_alias );
 
 
 
@@ -608,7 +595,7 @@ function confirmSubmit() {
  */
 
 
-function display_databases( $redis, $curr_db, $sa ) {
+function display_databases( $redis, $curr_db, $sa) {
 
 	global $is_demo, $script_name, $sort, $pattern, $proje_isim;
 
@@ -725,10 +712,10 @@ function display_key( $k ) {
 		}	
 	}
 	
+	display_databases( $redis,  $db, $_REQUEST['sa']);
 	
-	
-	echo 'DB: <a href="/index.php?sa='.$_GET['sa'].'"> Sunucuya Dön </a>'." \n";
-	echo 'Proje :  <a href="\index.php?db='.$_GET['db'].'&sa='.$_GET['sa'].'">'.$proje_isim[$_GET['db']]. "</a> \n";
+	echo '<h3><a href="/index.php?sa='.$_GET['sa'].'"> Sunucuya Dön </a> </h3>';
+	echo '<h2><a href="\index.php?db='.$_GET['db'].'&sa='.$_GET['sa'].'">'.$proje_isim[$_GET['db']].'</a> </h2>';
 	echo "Key: <b> " .str_replace('_', '.', $k). " </b> \n";
 	echo "Type: " . $type 	. "\n";
 
@@ -744,7 +731,7 @@ function display_key( $k ) {
 			$u = $_SERVER['REQUEST_URI'] . "&u=1";
 		    echo "<a href='". $u . "'>Unserialize</a>\n";
 		}
-	}*/
+	}
 	
 	
 	if( ( isset( $_REQUEST["s"] ) ) && ( is_array( $retval ) ) ) {
@@ -760,7 +747,7 @@ function display_key( $k ) {
 		    	echo "<a href='". $u . "'>Sort array by values</a>\n";
 			}
 		}
-	}
+	}*/
 
 
 	echo "\n";
@@ -771,37 +758,45 @@ function display_key( $k ) {
 	
 	$tur = '';
 	
-	rsort($retval);
+	$toplam_sayi = count($retval);
 	
-	foreach($retval as $log){
+	for ($i = $toplam_sayi; $i > -1; --$i) {
 	
+	//} foreach($retval as $log){
 	
-			$tur = substr($log, 0, 7);
+		$log = $retval[$i];
+	
+		$tur = substr($log, 0, 7);
+		
+		$log = str_replace(array('httplog', 'app_log', ' ZAMAN ', ' saat ', 'http://', 'array(', '"', "'", '}'), '', $log);
 			
-				if($tur === 'httplog')
-					$tur = 'list-group-item-info';
-					
-				else{
-
-					$tur = 'list-group-item-warning';
-					
-					$kes = explode('Stack trace:', $log);
-					if(count($kes) > 0)
-						$log = $kes[0];
-				}
-				
-				
-				$log = str_replace(array('httplog', 'app_log', ' ZAMAN ', ' saat ', 'http://', 'array(', '"', "'"), '', $log);
-				
+			if($tur === 'httplog'){
+			
+				$tur = 'list-group-item-info';
 				
 				$ccds_arr = array(' IP ', ' TRYC ', ' URL ');// success, default  , ' ZAMAN '
 				$ccdm_arr = array(' <span class="alert alert-danger">ip</span> ', ' <span class="alert alert-warning">TRYC</span> ', ' <span class="alert alert-success">URL</span> '); //, ' <span class="alert alert-default">saat</span> '
-				
 				$log = str_replace($ccds_arr, $ccdm_arr, $log);
 				
-		
-		echo '<li class="'.$tur.'">'.$log.'</li>';
-	
+			}else{
+
+				$tur = 'list-group-item-danger';
+				
+				$kes = explode('Stack trace:', $log);
+				if(count($kes) > 0)
+					$log = $kes[0];
+					
+				$log = str_replace(array(' MSJ ', 'tipi', ','), array(' <span class="alert alert-warning">','</span>tipi', ' '), $log);
+			}
+			
+			
+			
+			
+			
+			
+		if($log != '')
+			echo '<li class="'.$tur.'">'.$log.'</li>';
+
 	}
 	echo '</ul></div>';
 }
