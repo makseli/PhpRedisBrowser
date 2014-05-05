@@ -727,7 +727,7 @@ function display_key( $k ) {
 	
 	
 	
-	echo 'DB: <a href="/index.php?sa=10.70+Web+Sunucu"> Sunucuya Dön </a>'." \n";
+	echo 'DB: <a href="/index.php?sa='.$_GET['sa'].'"> Sunucuya Dön </a>'." \n";
 	echo 'Proje :  <a href="\index.php?db='.$_GET['db'].'&sa='.$_GET['sa'].'">'.$proje_isim[$_GET['db']]. "</a> \n";
 	echo "Key: <b> " .str_replace('_', '.', $k). " </b> \n";
 	echo "Type: " . $type 	. "\n";
@@ -791,11 +791,11 @@ function display_key( $k ) {
 				}
 				
 				
-				$log = str_replace(array('httplog', 'app_err', 'saat', 'http://', 'array(', '"', "'"), '', $log);
+				$log = str_replace(array('httplog', 'app_err', ' ZAMAN ', ' saat ', 'http://', 'array(', '"', "'"), '', $log);
 				
 				
-				$ccds_arr = array(' IP ', ' TRYC ', ' URL ', ' ZAMAN ');// success, default 
-				$ccdm_arr = array(' <span class="alert alert-danger">ip</span> ', ' <span class="alert alert-warning">TRYC</span> ', ' <span class="alert alert-success">URL</span> ', ' <span class="alert alert-default">saat</span> ');
+				$ccds_arr = array(' IP ', ' TRYC ', ' URL ');// success, default  , ' ZAMAN '
+				$ccdm_arr = array(' <span class="alert alert-danger">ip</span> ', ' <span class="alert alert-warning">TRYC</span> ', ' <span class="alert alert-success">URL</span> '); //, ' <span class="alert alert-default">saat</span> '
 				
 				$log = str_replace($ccds_arr, $ccdm_arr, $log);
 				
