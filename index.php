@@ -1,5 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>PHP Redis Browser 0.3</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script language="JavaScript">
+/*function ScrollDown() {
+	window.scrollBy(0,1000000);
+	scrolldelay = setTimeout('pageScroll()',100);
+}
+window.onload=ScrollDown;*/
+</script>
+<style type="text/css">
+A:link {text-decoration: none; color:white}
+A:visited {text-decoration: none; color:orange}
+A:active {text-decoration: none}
+A:hover {text-decoration: underline; color:yellow;}
+pre{background-color:#343434}
+.bady{background-color:#343434}
+ul li span {padding:3px!important}
+ul li {margin-bottom:10px; }
+</style>
+</head>
+<body class="bady">
 <?php
-
 
 $proje_isim = array(
 	'0' => ' -  0 boş -',
@@ -60,12 +89,6 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-
-
-
  * 
  * 
  * IMPORTANT
@@ -130,13 +153,12 @@ Predis\Autoloader::register();
  */
 
 				$CONFIG_HOST = array(
-				
-				    array(
+
 					    'host'     		=> '127.0.0.1', 
 					    'port'    	 	=> 6371, 
 					    'database' 		=> 0,
 					    'password' 		=> '',
-				       	'alias' 		=> 'lokal_Redis',
+				       	    'alias' 		=> 'logal',
 				    ),
 				);
 
@@ -158,6 +180,19 @@ Predis\Autoloader::register();
 
 
 
+
+
+
+
+		
+
+
+
+
+
+
+
+
 		
 	$db 			= ( isset( $_REQUEST['db'] ) ? ( $_REQUEST['db'] ) : 0 );		
 	$server_alias 	= ( isset( $_REQUEST['sa'] ) ? ( $_REQUEST['sa'] ) : $CONFIG_HOST[0]['alias'] );		
@@ -167,34 +202,6 @@ Predis\Autoloader::register();
 	
 	$is_demo 		= false;
 	$script_name 	= isset( $_SERVER['SCRIPT_NAME'] ) ? $_SERVER['SCRIPT_NAME'] : "index.php";
-
-	
-
-?>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>PHP Redis Browser 0.3</title>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script language="JavaScript">
-/*function ScrollDown() {
-	window.scrollBy(0,1000000);
-	scrolldelay = setTimeout('pageScroll()',100);
-}
-window.onload=ScrollDown;*/
-</script>
-</head>
-<body>
-<style type="text/css">
-ul li span {padding:3px!important}
-ul li {margin-bottom:10px; }
-</style>
-<?php
 
 
 
@@ -575,15 +582,6 @@ function confirmSubmit() {
 </script>
 
 
-</body>
-</html>
-
-
-
-
-
-
-
 <?php
 
 
@@ -659,7 +657,7 @@ function display_info( $redis, $sa ) {
     	echo '<td>' .  $v . "</td></tr>";
 	    
 	}
-	echo "</table></body></html>";
+	echo '</table>';
 }
 
 
@@ -772,7 +770,7 @@ function display_key( $k ) {
 			
 			if($tur === 'httplog'){
 			
-				$tur = 'list-group-item-info';
+				$tur = 'list-group-item-inverse" style="color:white;';
 				
 				$ccds_arr = array(' IP ', ' TRYC ', ' URL ');// success, default  , ' ZAMAN '
 				$ccdm_arr = array(' <span class="alert alert-danger">ip</span> ', ' <span class="alert alert-warning">TRYC</span> ', ' <span class="alert alert-success">URL</span> '); //, ' <span class="alert alert-default">saat</span> '
@@ -780,13 +778,13 @@ function display_key( $k ) {
 				
 			}else{
 
-				$tur = 'list-group-item-danger';
+				$tur = 'list-group-item-success " style="margin:50px; color:black;';
 				
 				$kes = explode('Stack trace:', $log);
 				if(count($kes) > 0)
 					$log = $kes[0];
 					
-				$log = str_replace(array(' MSJ ', 'tipi', ','), array(' <span class="alert alert-warning">','</span>tipi', ' '), $log);
+				$log = str_replace(array(' MSJ ', ' IP', ','), array(' <span class="alert alert-warning"><b>','</b></span> IP', ' '), $log);
 			}
 			
 			
@@ -895,3 +893,5 @@ function util_html_form_start( $action, $pattern, $sort, $sa, $type, $put_action
 
 
 ?>
+</body>
+</html>
